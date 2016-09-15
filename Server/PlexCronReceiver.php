@@ -12,11 +12,17 @@ class PlexCronReceiver {
 	function __construct ($provided_hash = "", $movie_list, $tv_list, $sender) {
 		
 		$this->sender = ($sender !== '') ? $sender : "Unknown";
-		($this->hash == $provided_hash && count($movie_list) > 0) ? $this->reg_movies($movie_list) : null;
-		($this->hash == $provided_hash && count($tv_list) > 0) ? $this->reg_tv($tv_list) : null;
-		$this->response['Status'] = "Success";
-		$this->response['Sender'] = $this->serverName;
-		echo json_encode((object)$this->response);
+		if ($this->hash === $provided_hash) {
+			(count($movie_list) > 0) ? $this->reg_movies($movie_list) : null;
+			(count($tv_list) > 0) ? $this->reg_tv($tv_list) : null;
+			$this->response['Status'] = "Success";
+			$this->response['Sender'] = $this->serverName;
+			echo json_encode((object)$this->response);
+		}
+		else {
+			$this->response['Status'] = "Unauthorised";
+			echo json_encode((object)["Status" => "Unauthorised"]);
+		}
 		
 	}
 	
