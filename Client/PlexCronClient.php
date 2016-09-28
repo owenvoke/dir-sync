@@ -13,7 +13,7 @@ class PlexCronClient {
     private $server     = "";
 	
 
-    protected function __construct ($server = "", $scanMovies = true, $scanTv = true, $debug = false ) {
+    public function __construct ($server = "", $scanMovies = true, $scanTv = true, $debug = false ) {
 		
 		$this->server = ($server) ? $server : false;
 		$this->debug = ($debug) ? true : false;
