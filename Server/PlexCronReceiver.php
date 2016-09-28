@@ -9,7 +9,7 @@ class PlexCronReceiver {
 	
 	private $response = [];
 	
-	protected function __construct ($provided_hash = "", $movie_list, $tv_list, $sender) {
+	public function __construct ($provided_hash = "", $movie_list, $tv_list, $sender) {
 		
 		$this->sender = ($sender !== '') ? $sender : "Unknown";
 		if ($this->hash === $provided_hash) {
