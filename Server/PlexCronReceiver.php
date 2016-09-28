@@ -9,12 +9,12 @@ class PlexCronReceiver {
 	
 	private $response = [];
 	
-	function __construct ($provided_hash = "", $movie_list, $tv_list, $sender) {
+	protected function __construct ($provided_hash = "", $movie_list, $tv_list, $sender) {
 		
 		$this->sender = ($sender !== '') ? $sender : "Unknown";
 		if ($this->hash === $provided_hash) {
-			(count($movie_list) > 0) ? $this->reg_movies($movie_list) : null;
-			(count($tv_list) > 0) ? $this->reg_tv($tv_list) : null;
+			(count($movie_list) > 0) ? $this->regMovies($movie_list) : null;
+			(count($tv_list) > 0) ? $this->regTv($tv_list) : null;
 			$this->response['Status'] = "Success";
 			$this->response['Sender'] = $this->serverName;
 			echo json_encode((object)$this->response);
@@ -26,7 +26,7 @@ class PlexCronReceiver {
 		
 	}
 	
-	private function reg_movies ($movie_list) {
+	private function regMovies ($movie_list) {
 		
 		if (!$this->checkLength($movie_list)) { return false; }
 		$this->writeToFile($movie_list, $this->moviesTextPath);
@@ -34,7 +34,7 @@ class PlexCronReceiver {
 		
 	}
 	
-	private function reg_tv ($tv_list) {
+	private function regTv ($tv_list) {
 		
 		if (!$this->checkLength($tv_list)) { return false; }
 		$this->writeToFile($tv_list, $this->tvTextPath);

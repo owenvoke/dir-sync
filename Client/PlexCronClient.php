@@ -13,7 +13,7 @@ class PlexCronClient {
     private $server     = "";
 	
 
-    function __construct ($server = "", $scanMovies = true, $scanTv = true, $debug = false ) {
+    protected function __construct ($server = "", $scanMovies = true, $scanTv = true, $debug = false ) {
 		
 		$this->server = ($server) ? $server : false;
 		$this->debug = ($debug) ? true : false;
@@ -50,7 +50,7 @@ class PlexCronClient {
 						$results = scandir($path);
 
 						foreach ($results as $result) {
-							if ($result === '.' or $result === '..') continue;
+							if ($result === '.' || $result === '..') continue;
 
 							if (is_dir($path . '\\' . $result)) {
 								$folders[] = $result;
@@ -64,12 +64,12 @@ class PlexCronClient {
 						$results = scandir($path);
 						
 						foreach ($results as $result) {
-							if ($result === '.' or $result === '..') continue;
+							if ($result === '.' || $result === '..') continue;
 
 							if (is_dir($path . '\\' . $result)) {
 								$subPath = scandir($path . '\\' . $result);
 								foreach ($subPath as $series) {
-									if ($series === '.' or $series === '..') continue;
+									if ($series === '.' || $series === '..') continue;
 									if (is_dir($path . '\\' . $result . '\\' . $series)) {
 										$folders[] = $result . "/" . $series;
 									}
