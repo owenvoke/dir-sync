@@ -1,6 +1,8 @@
 # PlexCron
 A folder list sync between Server and Client (designed for use with a Plex environment)
 
+[![GitHub release](https://img.shields.io/github/release/PXgamer/PlexCron.svg)](https://github.com/PXgamer/PlexCron/releases/latest) [![Scrutinizer Build](https://img.shields.io/scrutinizer/build/g/PXgamer/PlexCron.svg)](https://scrutinizer-ci.com/g/PXgamer/PlexCron/build-status/master) [![SensioLabs Insight](https://img.shields.io/sensiolabs/i/9c87804b-d448-4fcf-8c10-9e366518292c.svg)](https://insight.sensiolabs.com/projects/9c87804b-d448-4fcf-8c10-9e366518292c)
+
 ## Installation
 
 1. Clone the git repository `git clone https://github.com/PXgamer/PlexCron.git`
