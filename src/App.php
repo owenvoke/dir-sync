@@ -13,9 +13,4 @@ class App
     const TV_PATH = "C:\\TV Shows";
 
     const HASH = "a75f22d3cd5aea";
-
-    public function __construct()
-    {
-        define('ROOT_PATH', realpath('..'));
-    }
 }
