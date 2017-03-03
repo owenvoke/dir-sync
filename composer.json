@@ -1,0 +1,16 @@
+{
+  "name": "pxgamer/plex-cron",
+  "description": "A folder list sync between Server and Client.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "author's name",
+      "email": "email@example.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "pxgamer\\PlexCron\\": "src/"
+    }
+  }
+}
