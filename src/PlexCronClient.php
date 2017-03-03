@@ -6,7 +6,6 @@ class Client
 {
     public $movies = [];
     public $tv_shows = [];
-    private $debug = false;
     private $server = "";
 
     public function __construct($server = "", $scanMovies = true, $scanTv = true, $debug = false)
@@ -36,10 +35,10 @@ class Client
     {
         header('Content-Type: text/json');
         $sendObject = (object)[
-            "hash" => $this->hash,
+            "hash" => App::HASH,
             "movies" => $this->movies,
             "tv_shows" => $this->tv_shows,
-            "sender" => $this->sender
+            "sender" => App::CLIENT_NAME
         ];
         if ($this->debug) {
             echo json_encode($sendObject);
@@ -66,7 +65,7 @@ class Client
         if ($type) {
             switch ($type) {
                 case 'movies':
-                    $path = $this->moviesPath;
+                    $path = App::MOVIE_PATH;
                     if (is_dir($path)) {
                         $results = scandir($path);
 
@@ -82,7 +81,7 @@ class Client
                     }
                     break;
                 case 'tv':
-                    $path = $this->tvPath;
+                    $path = App::TV_PATH;
                     if (is_dir($path)) {
                         $results = scandir($path);
 
