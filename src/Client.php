@@ -6,11 +6,9 @@ class Client
 {
     public $movies = [];
     public $tv_shows = [];
-    private $server = "";
 
-    public function __construct($server = "", $scanMovies = true, $scanTv = true, $debug = false)
+    public function __construct($scanMovies = true, $scanTv = true, $debug = false)
     {
-        $this->server = ($server) ? $server : false;
         $this->debug = ($debug) ? true : false;
 
         ($scanMovies) ? $this->scanMovies() : null;
@@ -47,7 +45,7 @@ class Client
             CURL_SETOPT_ARRAY(
                 $ch,
                 [
-                    CURLOPT_URL => $this->server,
+                    CURLOPT_URL => App::RECEIVER_URL,
                     CURLOPT_POST => 1,
                     CURLOPT_SSL_VERIFYPEER => 0,
                     CURLOPT_SSL_VERIFYHOST => 0,
