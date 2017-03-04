@@ -1,6 +1,6 @@
 <?php
 
-namespace pxgamer\PlexCron;
+namespace pxgamer\DirSync;
 
 class Receiver
 {

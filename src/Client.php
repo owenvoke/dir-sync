@@ -1,32 +1,21 @@
 <?php
 
-namespace pxgamer\PlexCron;
+namespace pxgamer\DirSync;
 
 class Client
 {
-    public $movies = [];
-    public $tv_shows = [];
+    public $to_send = [];
 
-    public function __construct($scanMovies = true, $scanTv = true, $debug = false)
+    public function init($directories = [])
     {
-        $this->debug = ($debug) ? true : false;
+        if (empty($directories) || !is_array($directories)) {
+            return false;
+        }
 
-        ($scanMovies) ? $this->scanMovies() : null;
-        ($scanTv) ? $this->scanTv() : null;
-        $this->send();
-    }
-
-
-    public function scanMovies()
-    {
-        $this->movies = $this->recurseFolder('movies');
-        ($this->debug) ? var_dump($this->movies) : null;
-    }
-
-    public function scanTv()
-    {
-        $this->tv_shows = $this->recurseFolder('tv');
-        ($this->debug) ? var_dump($this->tv_shows) : null;
+        foreach ($directories as $key => $directory) {
+            $this->to_send[$key] = $this->scan($directory);
+        }
+        return true;
     }
 
     public function send()
@@ -34,76 +23,36 @@ class Client
         header('Content-Type: text/json');
         $sendObject = (object)[
             "hash" => App::HASH,
-            "movies" => $this->movies,
-            "tv_shows" => $this->tv_shows,
+            "content" => $this->to_send,
             "sender" => App::CLIENT_NAME
         ];
-        if ($this->debug) {
-            echo json_encode($sendObject);
-        } else {
-            $ch = curl_init();
-            CURL_SETOPT_ARRAY(
-                $ch,
-                [
-                    CURLOPT_URL => App::RECEIVER_URL,
-                    CURLOPT_POST => 1,
-                    CURLOPT_SSL_VERIFYPEER => 0,
-                    CURLOPT_SSL_VERIFYHOST => 0,
-                    CURLOPT_POSTFIELDS => http_build_query($sendObject),
-                    CURLOPT_RETURNTRANSFER => 1
-                ]
-            );
-            echo curl_exec($ch);
-        }
+        $ch = curl_init();
+        CURL_SETOPT_ARRAY(
+            $ch,
+            [
+                CURLOPT_URL => App::RECEIVER_URL,
+                CURLOPT_POST => 1,
+                CURLOPT_SSL_VERIFYPEER => 0,
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_POSTFIELDS => http_build_query($sendObject),
+                CURLOPT_RETURNTRANSFER => 1
+            ]
+        );
+        return curl_exec($ch);
     }
 
-    private function recurseFolder($type = false)
+    private function scan($folder_path)
     {
         $folders = [];
-        if ($type) {
-            switch ($type) {
-                case 'movies':
-                    $path = App::MOVIE_PATH;
-                    if (is_dir($path)) {
-                        $results = scandir($path);
+        if (is_dir($folder_path)) {
+            $results = new \DirectoryIterator($folder_path);
 
-                        foreach ($results as $result) {
-                            if ($result === '.' || $result === '..') {
-                                continue;
-                            }
+            foreach ($results as $result) {
+                if ($result->isDot() || !$result->isDir()) {
+                    continue;
+                }
 
-                            if (is_dir($path . '\\' . $result)) {
-                                $folders[] = $result;
-                            }
-                        }
-                    }
-                    break;
-                case 'tv':
-                    $path = App::TV_PATH;
-                    if (is_dir($path)) {
-                        $results = scandir($path);
-
-                        foreach ($results as $result) {
-                            if ($result === '.' || $result === '..') {
-                                continue;
-                            }
-
-                            if (is_dir($path . '\\' . $result)) {
-                                $subPath = scandir($path . '\\' . $result);
-                                foreach ($subPath as $series) {
-                                    if ($series === '.' || $series === '..') {
-                                        continue;
-                                    }
-                                    if (is_dir($path . '\\' . $result . '\\' . $series)) {
-                                        $folders[] = $result . "/" . $series;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    break;
-                default:
-                    break;
+                $folders[] = $result->getBasename();
             }
         }
         return $folders;

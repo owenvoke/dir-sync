@@ -1,16 +1,13 @@
 <?php
 
-namespace pxgamer\PlexCron;
+namespace pxgamer\DirSync;
 
 class App
 {
-    const RECEIVER_URL = "http://localhost/PlexCronReceiver.php";
+    const RECEIVER_URL = "http://localhost/Server";
 
-    const CLIENT_NAME = "PlexCronClient";
-    const SERVER_NAME = "PlexCronServer";
-
-    const MOVIE_PATH = "C:\\Movies";
-    const TV_PATH = "C:\\TV Shows";
+    const CLIENT_NAME = "DirSyncClient";
+    const SERVER_NAME = "DirSyncServer";
 
     const HASH = "a75f22d3cd5aea";
 }

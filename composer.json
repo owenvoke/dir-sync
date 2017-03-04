@@ -1,5 +1,5 @@
 {
-  "name": "pxgamer/plex-cron",
+  "name": "pxgamer/dir-sync",
   "description": "A folder list sync between Server and Client.",
   "license": "MIT",
   "authors": [
@@ -10,7 +10,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "pxgamer\\PlexCron\\": "src/"
+      "pxgamer\\DirSync\\": "src/"
     }
   }
 }
