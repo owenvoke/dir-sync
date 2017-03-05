@@ -1,8 +1,16 @@
 <?php
 
-header('Content-Type: text/json');
-if (isset($_POST['hash']) && $_POST['hash'] !== '') {
-    $PCR = new \pxgamer\DirSync\Receiver($_POST['hash'], $movies, $tv_shows, $_POST['sender']);
+use pxgamer\DirSync\App;
+use pxgamer\DirSync\Receiver;
+
+require '../../vendor/autoload.php';
+
+$Receiver = new Receiver;
+
+$hash = isset($_POST['hash']) ? $_POST['hash'] : '';
+$content = isset($_POST['content']) ? $_POST['content'] : [];
+if ($Receiver->verify($hash)) {
+    echo App::json($Receiver->register($content));
 } else {
-    echo json_encode((object)["Status" => "Unauthorised"]);
+    echo App::json((object)["status" => "unauthorised"]);
 }
