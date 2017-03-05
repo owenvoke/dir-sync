@@ -20,12 +20,12 @@ class Client
 
     public function send()
     {
-        header('Content-Type: text/json');
         $sendObject = (object)[
             "hash" => App::HASH,
             "content" => $this->to_send,
             "sender" => App::CLIENT_NAME
         ];
+
         $ch = curl_init();
         CURL_SETOPT_ARRAY(
             $ch,
@@ -38,7 +38,7 @@ class Client
                 CURLOPT_RETURNTRANSFER => 1
             ]
         );
-        return curl_exec($ch);
+        return json_decode(curl_exec($ch));
     }
 
     private function scan($folder_path)
