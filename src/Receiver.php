@@ -4,7 +4,6 @@ namespace pxgamer\DirSync;
 
 class Receiver
 {
-    private $response = [];
     private $rootPath;
     private $verified = false;
 
