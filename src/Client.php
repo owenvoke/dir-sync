@@ -32,8 +32,6 @@ class Client
             [
                 CURLOPT_URL => App::RECEIVER_URL,
                 CURLOPT_POST => 1,
-                CURLOPT_SSL_VERIFYPEER => 0,
-                CURLOPT_SSL_VERIFYHOST => 0,
                 CURLOPT_POSTFIELDS => http_build_query($sendObject),
                 CURLOPT_RETURNTRANSFER => 1
             ]
