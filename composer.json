@@ -2,12 +2,6 @@
   "name": "pxgamer/dir-sync",
   "description": "A folder list sync between Server and Client.",
   "license": "MIT",
-  "authors": [
-    {
-      "name": "PXgamer",
-      "email": "owzie123@gmail.com"
-    }
-  ],
   "autoload": {
     "psr-4": {
       "pxgamer\\DirSync\\": "src/"
