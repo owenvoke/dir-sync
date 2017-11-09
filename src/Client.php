@@ -17,6 +17,15 @@ class Client
     public $to_send = [];
 
     /**
+     * Client constructor.
+     * @param App $app
+     */
+    public function __construct(App $app)
+    {
+        $this->app = $app;
+    }
+
+    /**
      * @param array $directories
      * @return bool
      */

@@ -22,9 +22,11 @@ class Receiver
 
     /**
      * Receiver constructor.
+     * @param App $app
      */
-    public function __construct()
+    public function __construct(App $app)
     {
+        $this->app = $app;
         $this->rootPath = realpath('..');
     }
 
