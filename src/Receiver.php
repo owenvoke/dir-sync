@@ -53,7 +53,7 @@ class Receiver
             return ['status' => 'no content'];
         }
         foreach ($array as $key => $item) {
-            $this->writeToFile($item, $this->rootPath . '/Server/Files/' . $key);
+            $this->writeToFile($item, $this->rootPath . '/server/files/' . $key);
         }
         return ['status' => 'success'];
     }

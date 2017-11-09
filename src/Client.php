@@ -3,7 +3,7 @@
 namespace pxgamer\DirSync;
 
 /**
- * Class Client
+ * Class client
  */
 class Client
 {
@@ -17,7 +17,7 @@ class Client
     public $to_send = [];
 
     /**
-     * Client constructor.
+     * client constructor.
      * @param App $app
      */
     public function __construct(App $app)
