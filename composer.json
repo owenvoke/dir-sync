@@ -1,10 +1,10 @@
 {
-  "name": "pxgamer/dir-sync",
-  "description": "A folder list sync between Server and Client.",
-  "license": "MIT",
-  "autoload": {
-    "psr-4": {
-      "pxgamer\\DirSync\\": "src/"
+    "name": "pxgamer/dir-sync",
+    "description": "A folder list sync between Server and Client.",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "pxgamer\\DirSync\\": "src/"
+        }
     }
-  }
 }
