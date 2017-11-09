@@ -5,11 +5,12 @@ use pxgamer\DirSync\Client;
 
 require '../../vendor/autoload.php';
 
-$Client = new Client;
-$Client->init(
+$client = new Client();
+$client->init(
     [
-        'Films' => 'C:\Users\PXgamer\Films',
+        'Films'    => 'C:\Users\PXgamer\Films',
         'TV Shows' => 'C:\Users\PXgamer\TV Shows'
     ]
 );
-echo App::json($Client->send());
+
+echo App::json($client->send());
