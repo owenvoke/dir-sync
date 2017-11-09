@@ -2,10 +2,33 @@
 
 namespace pxgamer\DirSync;
 
+/**
+ * Class client
+ */
 class Client
 {
+    /**
+     * @var App
+     */
+    private $app;
+    /**
+     * @var array
+     */
     public $to_send = [];
 
+    /**
+     * client constructor.
+     * @param App $app
+     */
+    public function __construct(App $app)
+    {
+        $this->app = $app;
+    }
+
+    /**
+     * @param array $directories
+     * @return bool
+     */
     public function init($directories = [])
     {
         if (empty($directories) || !is_array($directories)) {
@@ -18,27 +41,34 @@ class Client
         return true;
     }
 
+    /**
+     * @return mixed
+     */
     public function send()
     {
         $sendObject = (object)[
-            "hash" => App::HASH,
+            "hash"    => $this->app->getHash(),
             "content" => $this->to_send,
-            "sender" => App::CLIENT_NAME
+            "sender"  => $this->app->getClientName(),
         ];
 
         $ch = curl_init();
-        CURL_SETOPT_ARRAY(
+        curl_setopt_array(
             $ch,
             [
-                CURLOPT_URL => App::RECEIVER_URL,
-                CURLOPT_POST => 1,
-                CURLOPT_POSTFIELDS => http_build_query($sendObject),
+                CURLOPT_URL            => $this->app->getReceiverUrl(),
+                CURLOPT_POST           => 1,
+                CURLOPT_POSTFIELDS     => http_build_query($sendObject),
                 CURLOPT_RETURNTRANSFER => 1
             ]
         );
         return json_decode(curl_exec($ch));
     }
 
+    /**
+     * @param $folder_path
+     * @return array
+     */
     private function scan($folder_path)
     {
         $folders = [];

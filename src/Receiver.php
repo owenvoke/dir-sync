@@ -2,36 +2,67 @@
 
 namespace pxgamer\DirSync;
 
+/**
+ * Class Receiver
+ */
 class Receiver
 {
+    /**
+     * @var App
+     */
+    private $app;
+    /**
+     * @var bool|string
+     */
     private $rootPath;
+    /**
+     * @var bool
+     */
     private $verified = false;
 
-    public function __construct()
+    /**
+     * Receiver constructor.
+     * @param App $app
+     */
+    public function __construct(App $app)
     {
+        $this->app = $app;
         $this->rootPath = realpath('..');
     }
 
+    /**
+     * @param $senderHash
+     * @return bool
+     */
     public function verify($senderHash)
     {
-        if (App::HASH === $senderHash) {
+        if ($this->app->getHash() === $senderHash) {
             $this->verified = true;
         }
 
         return $this->verified;
     }
 
+    /**
+     * @param $array
+     * @return array
+     */
     public function register($array)
     {
         if (!count($array)) {
             return ['status' => 'no content'];
         }
         foreach ($array as $key => $item) {
-            $this->writeToFile($item, $this->rootPath . '/Server/Files/' . $key);
+            $this->writeToFile($item, $this->rootPath . '/server/files/' . $key);
         }
         return ['status' => 'success'];
     }
 
+    /**
+     * @param array  $data
+     * @param string $fileName
+     * @return bool
+     */
     private function writeToFile($data = [], $fileName = "null")
     {
         $handle = fopen($fileName . '.txt', "w+");
@@ -39,9 +70,9 @@ class Receiver
             return false;
         }
         $json = (object)[
-            'last_updated_by' => App::CLIENT_NAME,
+            'last_updated_by' => $this->app->getClientName(),
             'last_updated_on' => time(),
-            'content' => $data
+            'content'         => $data
         ];
         fwrite($handle, json_encode($json));
         return true;
