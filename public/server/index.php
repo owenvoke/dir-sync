@@ -5,7 +5,14 @@ use pxgamer\DirSync\Receiver;
 
 require '../../vendor/autoload.php';
 
-$receiver = new Receiver();
+if (file_exists(__DIR__.'/../../.env')) {
+    $dotEnv = new Dotenv\Dotenv(__DIR__.'/../../');
+    $dotEnv->load();
+}
+
+$app = new App();
+
+$receiver = new Receiver($app);
 
 $hash = isset($_POST['hash']) ? $_POST['hash'] : '';
 $content = isset($_POST['content']) ? $_POST['content'] : [];

@@ -5,7 +5,15 @@ use pxgamer\DirSync\Client;
 
 require '../../vendor/autoload.php';
 
-$client = new Client();
+if (file_exists(__DIR__.'/../../.env')) {
+    $dotEnv = new Dotenv\Dotenv(__DIR__.'/../../');
+    $dotEnv->load();
+}
+
+$app = new App();
+
+$client = new Client($app);
+
 $client->init(
     [
         'Films'    => 'C:\Users\PXgamer\Films',
